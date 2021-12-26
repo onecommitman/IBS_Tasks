@@ -23,8 +23,8 @@ public class Task1 {
         sweetBox.showPrice();
         sweetBox.showInfo();
 
-        //sweetBox.optimizeWight(70.0);
-        sweetBox.optimizePrice(70.0);
+        //sweetBox.optimizeWight(21);
+        sweetBox.optimizePrice(21);
 
         sweetBox.showWeight();
         sweetBox.showPrice();
@@ -103,13 +103,13 @@ class SweetBox implements Box{
         //removeLast
         boxOfSweets.remove(boxOfSweets.size()-1);
     }
-    //@Override
+
     public void remove(int index) {
-        //removeLast
+        //removeByIndex
         boxOfSweets.remove(index);
     }
     double getWeight(){
-        int boxWeight = 0;
+        double boxWeight = 0;
         for(Sweet sweet:boxOfSweets){
             boxWeight += sweet.weight;
         }
@@ -122,7 +122,7 @@ class SweetBox implements Box{
     }
 
     double getPrice(){
-        int boxPrice = 0;
+        double boxPrice = 0;
         for(Sweet sweet:boxOfSweets){
             boxPrice += sweet.price;
         }
@@ -140,16 +140,20 @@ class SweetBox implements Box{
         System.out.println(boxOfSweets.toString());
     }
 
+    double getMinWeight(){
+        double minWeight = boxOfSweets.get(0).weight;
+        for(int i = 0; i < boxOfSweets.size(); i++){
+            if(boxOfSweets.get(i).price < minWeight) minWeight = boxOfSweets.get(i).weight;
+        }
+        return minWeight;
+    }
     @Override
     public void optimizeWight(double requiredWeight) {
         System.out.println("---------------------Оптимизация по весу подарка------------------");
-        double minWeight = boxOfSweets.get(0).weight;
-        for(int i = 0; i < boxOfSweets.size(); i++){
-            if(boxOfSweets.get(i).weight < minWeight) minWeight = boxOfSweets.get(i).weight;
-        }
+
         while (getWeight() > requiredWeight){
             for(int i = 0; i < boxOfSweets.size(); i++){
-                if(boxOfSweets.get(i).weight == minWeight) boxOfSweets.remove(i);
+                if(boxOfSweets.get(i).weight == getMinWeight()) boxOfSweets.remove(i);
             }
         }
     }
