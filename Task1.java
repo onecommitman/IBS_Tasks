@@ -23,8 +23,8 @@ public class Task1 {
         sweetBox.showPrice();
         sweetBox.showInfo();
 
-        //sweetBox.optimizeWight(21);
-        sweetBox.optimizePrice(21);
+        sweetBox.optimizeWeight(21);
+        //sweetBox.optimizePrice(21);
 
         sweetBox.showWeight();
         sweetBox.showPrice();
@@ -87,7 +87,7 @@ interface Box{
     void showWeight();
     void showPrice();
     void showInfo();
-    void optimizeWight(double requiredWeight);
+    void optimizeWeight(double requiredWeight);
     void optimizePrice(double requiredWeight);
 }
 class SweetBox implements Box{
@@ -142,20 +142,25 @@ class SweetBox implements Box{
 
     double getMinWeight(){
         double minWeight = boxOfSweets.get(0).weight;
-        for(int i = 0; i < boxOfSweets.size(); i++){
-            if(boxOfSweets.get(i).price < minWeight) minWeight = boxOfSweets.get(i).weight;
+        for(int i = 1; i < boxOfSweets.size(); i++){
+            if(boxOfSweets.get(i).weight < minWeight) minWeight = boxOfSweets.get(i).weight;
         }
         return minWeight;
     }
+
     @Override
-    public void optimizeWight(double requiredWeight) {
+    public void optimizeWeight(double requiredWeight) {
         System.out.println("---------------------Оптимизация по весу подарка------------------");
 
         while (getWeight() > requiredWeight){
             for(int i = 0; i < boxOfSweets.size(); i++){
-                if(boxOfSweets.get(i).weight == getMinWeight()) boxOfSweets.remove(i);
+                if(boxOfSweets.get(i).weight == getMinWeight()) {
+                    boxOfSweets.remove(i);
+                    break;
+                }
             }
         }
+
     }
 
     double getMinPrice(){
