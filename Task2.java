@@ -1,16 +1,10 @@
 package IBS_Tasks;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,17 +21,28 @@ public class Task2 {
         }
 
         String text = new String(fileData);
-        List<String> list = new ArrayList<>();
+        List<String> words = new ArrayList<>();
         Pattern pattern = Pattern.compile("[А-Яа-яёЁ0-9]+");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()){
             //System.out.println(matcher.group());
-            list.add(matcher.group().toLowerCase());
+            words.add(matcher.group().toLowerCase());
         }
-        Collections.sort(list);
+        Collections.sort(words);
 
-        for(String s:list){
-            System.out.println(s);
+        Map<String, Integer> dictionary = new HashMap<>();
+        for (String word: words) {
+            Integer frequency = dictionary.get(word);
+            dictionary.put(word, frequency == null ? 1 : frequency + 1);
+        }
+
+        //Выводим результат
+        dictionary.forEach((key, value) -> System.out.println(key + " " + value));
+
+
+        for(Map.Entry<String, Integer> item : dictionary.entrySet()){
+
+            //System.out.printf("Key: %d  Value: %s \n", item.getKey(), item.getValue());
         }
     }
 }
