@@ -9,16 +9,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Task2 {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args){
         StringBuffer fileData = new StringBuffer();
-        BufferedReader reader = new BufferedReader(
-                new FileReader("D:\\Doc\\Text.txt"));
-        char[] buf = new char[1024];
-        int numRead=0;
-        while((numRead=reader.read(buf)) != -1){
-            String readData = String.valueOf(buf, 0, numRead);
-            fileData.append(readData);
+        //BufferedReader reader = new BufferedReader(new FileReader("D:\\Doc\\Text.txt"));
+        try(BufferedReader reader = new BufferedReader(new FileReader("Text.txt"));){
+            char[] buf = new char[1024];
+            int numRead=0;
+            while((numRead=reader.read(buf)) != -1){
+                String readData = String.valueOf(buf, 0, numRead);
+                fileData.append(readData);
+            }
         }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+
 
         String text = new String(fileData);
         List<String> words = new ArrayList<>();
@@ -39,10 +44,11 @@ public class Task2 {
         //Выводим результат
         dictionary.forEach((key, value) -> System.out.println(key + " " + value));
 
-
+        int maxValueInMap=(Collections.max(dictionary.values())); //поиск максимального повторения
         for(Map.Entry<String, Integer> item : dictionary.entrySet()){
-
-            //System.out.printf("Key: %d  Value: %s \n", item.getKey(), item.getValue());
+            if (item.getValue()==maxValueInMap) {
+                System.out.println("Самое повторяющееся слово: " + item.getKey());     // вывож слов(а) с максимальным повторением
+            }
         }
     }
 }
