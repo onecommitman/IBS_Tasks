@@ -1,12 +1,28 @@
 package IBS_Tasks.Task3;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Security {
     private String name;
     private String[] currency;
     private String code;
     private String date;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Security security = (Security) o;
+        return Objects.equals(name, security.name) && Arrays.equals(currency, security.currency) && Objects.equals(code, security.code) && Objects.equals(date, security.date);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(name, code, date);
+        result = 31 * result + Arrays.hashCode(currency);
+        return result;
+    }
 
     @Override
     public String toString() {
